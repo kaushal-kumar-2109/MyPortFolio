@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 // require('dotenv').config();
 require('@dotenvx/dotenvx').config()
 
@@ -28,10 +29,15 @@ async function startServer() {
         secret: process.env.SESSION_SECRET || 'your-secret-key',
         resave: false,
         saveUninitialized: false,
+        store: MongoStore.create({
+          mongoUrl: process.env.MONGO_CLUSTER_URL || process.env.MONGO_CLUSTER_SRV_URL,
+          collectionName: 'sessions',
+          ttl: 30 * 60 // 30 minutes in seconds
+        }),
         cookie: {
           secure: process.env.NODE_ENV === 'production',
           httpOnly: true,
-          maxAge: 1000 * 60 * 30, // 30 minutes
+          maxAge: 1000 * 60 * 30, // 30 minutes in milliseconds
         },
       })
     );

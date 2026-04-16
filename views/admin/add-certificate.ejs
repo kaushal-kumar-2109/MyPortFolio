@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Certificate | Portfolio Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #ff7a00;
+        --accent-cert: #7c3aed;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .admin-header {
+        background: var(--surface);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .admin-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .badge-cert {
+        background: rgba(124, 58, 237, 0.2);
+        border: 1px solid rgba(124, 58, 237, 0.4);
+        color: #a78bfa;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .container {
+        max-width: 640px;
+        margin: 2.5rem auto;
+        padding: 0 1.5rem 3rem;
+      }
+
+      .form-card {
+        border-radius: 1.5rem;
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 2rem;
+      }
+
+      .section-divider {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin: 1.75rem 0 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(255,255,255,0.06);
+      }
+
+      .form-group { margin-bottom: 1.5rem; }
+
+      label {
+        display: block;
+        margin-bottom: 0.6rem;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      label .req { color: var(--accent); margin-left: 2px; }
+
+      input, textarea {
+        width: 100%;
+        padding: 0.9rem 1.1rem;
+        border-radius: 0.9rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        resize: vertical;
+      }
+
+      input:focus, textarea:focus {
+        outline: none;
+        border-color: rgba(124, 58, 237, 0.5);
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+      }
+
+      input::placeholder, textarea::placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      .date-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .help-text {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin-top: 0.45rem;
+        line-height: 1.5;
+      }
+
+      .error-message {
+        padding: 1rem 1.2rem;
+        border-radius: 1rem;
+        background: rgba(255, 76, 76, 0.08);
+        border: 1px solid rgba(255, 76, 76, 0.2);
+        color: #fca5a5;
+        font-size: 0.9rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.25rem;
+      }
+
+      .btn {
+        flex: 1;
+        padding: 0.95rem 1.5rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.95rem;
+        font-family: 'Poppins', sans-serif;
+        transition: transform 0.2s ease, background 0.25s ease, box-shadow 0.25s ease;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+
+      .btn-primary {
+        background: var(--accent-cert);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(124, 58, 237, 0.25);
+      }
+
+      .btn-primary:hover {
+        background: #6d28d9;
+        box-shadow: 0 6px 24px rgba(124, 58, 237, 0.35);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #fff;
+      }
+
+      .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1>Add Certificate <span class="badge-cert">New</span></h1>
+      <a href="/admin/dashboard" class="btn btn-secondary" style="flex: unset; padding: 0.6rem 1.25rem; font-size: 0.85rem;">← Back</a>
+    </div>
+
+    <div class="container">
+      <div class="form-card">
+        <% if (typeof error !== 'undefined') { %>
+          <div class="error-message"><%= error %></div>
+        <% } %>
+
+        <form method="post">
+          <!-- Basic Info -->
+          <div class="section-divider">Basic Info</div>
+
+          <div class="form-group">
+            <label for="courseName">Course Name <span class="req">*</span></label>
+            <input type="text" id="courseName" name="courseName" placeholder="e.g. Full Stack Web Development" required />
+          </div>
+
+          <div class="form-group">
+            <label for="institute">Institute / Platform <span class="req">*</span></label>
+            <input type="text" id="institute" name="institute" placeholder="e.g. Coursera, Udemy, MIT OpenCourseWare" required />
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Brief description of what this certification covers..."></textarea>
+          </div>
+
+          <!-- Technologies -->
+          <div class="section-divider">Technologies Learned</div>
+
+          <div class="form-group">
+            <label for="technologies">Technologies</label>
+            <input type="text" id="technologies" name="technologies" placeholder="e.g. React, Node.js, MongoDB, Express" />
+            <div class="help-text">Separate multiple technologies with commas. They will be stored as individual tags.</div>
+          </div>
+
+          <!-- Duration -->
+          <div class="section-divider">Duration</div>
+
+          <div class="date-grid">
+            <div class="form-group">
+              <label for="startDate">Start Date</label>
+              <input type="date" id="startDate" name="startDate" />
+            </div>
+            <div class="form-group">
+              <label for="endDate">End Date</label>
+              <input type="date" id="endDate" name="endDate" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Certificate</button>
+            <a href="/admin/dashboard" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

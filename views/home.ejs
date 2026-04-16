@@ -1,0 +1,426 @@
+<%
+  function getRawUrl(url) {
+    if (!url) return '';
+    if (url.includes('github.com') && url.includes('/blob/')) {
+      return url.replace('github.com', 'raw.githubusercontent.com')
+               .replace(/\/blob\//, '/')
+               .split('?')[0];
+    }
+    return url;
+  }
+
+  function getDevicon(skill) {
+    var s = skill.toLowerCase().replace(/[\s.-]/g, '');
+    var map = {
+      'nodejs': 'devicon-nodejs-plain colored',
+      'react': 'devicon-react-original colored',
+      'reactjs': 'devicon-react-original colored',
+      'javascript': 'devicon-javascript-plain colored',
+      'js': 'devicon-javascript-plain colored',
+      'mongodb': 'devicon-mongodb-plain colored',
+      'express': 'devicon-express-original',
+      'expressjs': 'devicon-express-original',
+      'html': 'devicon-html5-plain colored',
+      'html5': 'devicon-html5-plain colored',
+      'css': 'devicon-css3-plain colored',
+      'css3': 'devicon-css3-plain colored',
+      'python': 'devicon-python-plain colored',
+      'java': 'devicon-java-plain colored',
+      'mysql': 'devicon-mysql-plain colored',
+      'postgresql': 'devicon-postgresql-plain colored',
+      'git': 'devicon-git-plain colored',
+      'github': 'devicon-github-original',
+      'docker': 'devicon-docker-plain colored',
+      'nextjs': 'devicon-nextjs-plain',
+      'typescript': 'devicon-typescript-plain colored',
+      'ts': 'devicon-typescript-plain colored',
+      'tailwindcss': 'devicon-tailwindcss-plain colored',
+      'tailwind': 'devicon-tailwindcss-plain colored',
+      'bootstrap': 'devicon-bootstrap-plain colored',
+      'figma': 'devicon-figma-plain colored',
+      'cplusplus': 'devicon-cplusplus-plain colored',
+      'cpp': 'devicon-cplusplus-plain colored',
+      'c': 'devicon-c-plain colored',
+      'csharp': 'devicon-csharp-plain colored',
+      'php': 'devicon-php-plain colored',
+      'laravel': 'devicon-laravel-plain colored',
+      'vue': 'devicon-vuejs-plain colored',
+      'vuejs': 'devicon-vuejs-plain colored',
+      'angular': 'devicon-angularjs-plain colored',
+      'aws': 'devicon-amazonwebservices-original colored',
+      'firebase': 'devicon-firebase-plain colored',
+      'redux': 'devicon-redux-original colored',
+      'sass': 'devicon-sass-original colored',
+      'linux': 'devicon-linux-plain colored',
+      'postman': 'devicon-postman-plain colored'
+    };
+    return map[s] || 'devicon-devicon-plain colored';
+  }
+%>
+
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortFolio</title>
+    <meta name="description" content="Personal portfolio website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  </head>
+
+  <body>
+    <div id="globalLoader" class="loader-overlay">
+      <div class="loader"></div>
+    </div>
+    <div class="page-shell">
+      <%- include('partials/navbar') %>
+
+        <main>
+          <section id="home" class="hero section-padding">
+            <div class="container hero-grid">
+              <div class="hero-copy reveal">
+                <span class="eyebrow">
+                  <%= basicInfo.mainTitle || 'Full Stack Developer' %>
+                </span>
+                <h1>
+                  <%= basicInfo.subtitle || 'Web Developer' %>
+                </h1>
+                <p class="hero-text">
+                  <%= basicInfo.shortBio || 'I develop responsive web applications and full-stack solutions.' %>
+                </p>
+                <div class="hero-actions">
+                  <a href="/file/RESUME.pdf" class="button" download="RESUME.pdf">Get Resume</a>
+                  <a href="#portfolio" class="button button-alt">View Portfolio</a>
+                </div>
+                <div class="hero-stats">
+                  <div class="stat-card">
+                    <span>
+                      <%= basicInfo.totalProject || '0' %>
+                    </span>
+                    <p>Projects Completed</p>
+                  </div>
+                  <div class="stat-card">
+                    <span>
+                      <%= basicInfo.yearOfExperience || '0' %>
+                    </span>
+                    <p>Years Experience</p>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-visual reveal">
+                <div class="visual-card">
+                  <div class="visual-block"
+                    style="<%= basicInfo.mainImage ? 'background-image: url(' + getRawUrl(basicInfo.mainImage) + '); background-size: cover; background-position: center;' : '' %>">
+                  </div>
+                  <div class="visual-ring"></div>
+                  <div class="visual-glow"></div>
+                  <div class="visual-caption">
+                    <p>
+                      <%= basicInfo.mainTitle || 'Full Stack Developer' %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="about" class="section-padding bg-surface">
+            <div class="container section-header reveal">
+              <p class="section-label">About</p>
+              <h2>
+                <%= mainInfo.secondaryTitle || 'Building technical excellence.' %>
+              </h2>
+            </div>
+            <div class="container about-grid">
+              <div class="about-image reveal">
+                <div class="about-photo"
+                  style="<%= mainInfo.secondaryImage ? 'background-image: url(' + getRawUrl(mainInfo.secondaryImage) + '); background-size: cover; background-position: center;' : '' %>">
+                </div>
+              </div>
+              <div class="about-copy reveal">
+                <p style="white-space: pre-wrap;">
+                  <%= mainInfo.bio || 'Professional Full-Stack Developer.' %>
+                </p>
+
+                <div class="about-highlights">
+                  <div class="highlight-card">
+                    <h3>
+                      <%= mainInfo.internshipCount || 0 %>
+                    </h3>
+                    <p>Internships</p>
+                  </div>
+                  <div class="highlight-card">
+                    <h3>
+                      <%= mainInfo.aiProject || 0 %>
+                    </h3>
+                    <p>AI Projects</p>
+                  </div>
+                  <div class="highlight-card">
+                    <h3>
+                      <%= mainInfo.deployedProject || 0 %>
+                    </h3>
+                    <p>Deployed Projects</p>
+                  </div>
+                  <div class="highlight-card">
+                    <h3>
+                      <%= mainInfo.groupProjects || 0 %>
+                    </h3>
+                    <p>Group Projects</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <% if (internships && internships.length> 0) { %>
+            <section id="experience" class="section-padding">
+              <div class="container section-header reveal">
+                <p class="section-label">Experience</p>
+                <h2>Professional milestones and industry exposure.</h2>
+              </div>
+              <div class="container experience-grid">
+                <% internships.forEach(function(intern) { %>
+                  <article class="experience-card reveal">
+                    <div class="experience-icon">💼</div>
+                    <h3>
+                      <%= intern.internshipName %>
+                    </h3>
+                    <div class="company">
+                      <%= intern.company %>
+                    </div>
+                    <div class="duration">
+                      <%= intern.start %> — <%= intern.end %>
+                          <span class="mode-badge">
+                            <%= intern.mode %>
+                          </span>
+                    </div>
+                    <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+                      <%= intern.role %>
+                    </div>
+                    <div class="experience-tech">
+                      <% intern.technologies.forEach(function(tech) { %>
+                        <span class="tech-tag">
+                          <%= tech %>
+                        </span>
+                        <% }); %>
+                    </div>
+                  </article>
+                  <% }); %>
+              </div>
+            </section>
+            <% } %>
+
+              <% if (mainInfo.skills && mainInfo.skills.length> 0) { %>
+                <section id="skills" class="section-padding bg-surface">
+                  <div class="container section-header reveal">
+                    <p class="section-label">SkillSet</p>
+                    <h2>My Technical Proficiency.</h2>
+                  </div>
+                  <div class="container skills-grid">
+                    <% mainInfo.skills.forEach(function(skill) { %>
+                      <div class="skill-card reveal">
+                        <i class="skill-icon <%= getDevicon(skill) %>"></i>
+                        <span class="skill-name">
+                          <%= skill %>
+                        </span>
+                      </div>
+                      <% }); %>
+                  </div>
+                </section>
+                <% } %>
+
+                  <section id="services" class="section-padding">
+                    <div class="container section-header reveal">
+                      <p class="section-label">Services</p>
+                      <h2>Comprehensive full-stack development services.</h2>
+                    </div>
+                    <div class="container services-grid">
+                      <article class="service-card reveal">
+                        <div class="service-icon">✦</div>
+                        <h3>Frontend Development</h3>
+                        <p>Building responsive, interactive UIs with React, HTML5, CSS, and modern frameworks.</p>
+                      </article>
+                      <article class="service-card reveal">
+                        <div class="service-icon">✧</div>
+                        <h3>Backend Development</h3>
+                        <p>Creating robust APIs and server-side logic with Node.js and Express.</p>
+                      </article>
+                      <article class="service-card reveal">
+                        <div class="service-icon">★</div>
+                        <h3>Database Design</h3>
+                        <p>Designing and implementing efficient databases with MongoDB and MySQL.</p>
+                      </article>
+                      <article class="service-card reveal">
+                        <div class="service-icon">⧫</div>
+                        <h3>REST APIs</h3>
+                        <p>Developing scalable and secure RESTful APIs for seamless client-server communication.</p>
+                      </article>
+                      <article class="service-card reveal">
+                        <div class="service-icon">✹</div>
+                        <h3>Full Stack Solutions</h3>
+                        <p>End-to-end development from frontend design to backend implementation and deployment.</p>
+                      </article>
+                      <article class="service-card reveal">
+                        <div class="service-icon">✱</div>
+                        <h3>Deployment</h3>
+                        <p>Deploying applications on Render, Netlify, and managing production environments.</p>
+                      </article>
+                    </div>
+                  </section>
+
+                  <section id="portfolio" class="section-padding bg-surface">
+                    <div class="container section-header reveal">
+                      <p class="section-label">Portfolio</p>
+                      <h2>Innovative projects and professional milestones.</h2>
+                    </div>
+
+                    <div class="container portfolio-filter reveal">
+                      <button class="filter-btn active" data-filter="all">All</button>
+                      <button class="filter-btn" data-filter="project">Projects</button>
+                      <button class="filter-btn" data-filter="certificate">Certificates</button>
+                    </div>
+
+                    <div class="container portfolio-grid">
+                      <% if (projects && projects.length> 0) { %>
+                        <% projects.forEach(function(project, index) { %>
+                          <article class="project-card reveal portfolio-item" data-category="project"
+                            style="animation-delay: <%= index * 70 %>ms">
+                            <div class="project-cover"
+                              style="<%= project.mainImage ? 'background-image: url(' + getRawUrl(project.mainImage) + '); background-size: cover; background-position: center;' : '' %>">
+                              <div class="project-overlay"></div>
+                              <div class="project-label">Featured</div>
+                            </div>
+                            <div class="project-body">
+                              <h3>
+                                <%= project.title %>
+                              </h3>
+                              <p class="project-description-truncate">
+                                <%= project.description %>
+                              </p>
+                              <div class="project-tags">
+                                <% project.tags.forEach(function(tag) { %>
+                                  <span>
+                                    <%= tag %>
+                                  </span>
+                                  <% }); %>
+                              </div>
+                              <div class="project-actions">
+                                <a href="/MyPort/project/<%= project._id %>" class="button button-small">View
+                                  Details</a>
+                                <a href="<%= project.githubUrl %>" class="button button-small button-alt">GitHub</a>
+                              </div>
+                            </div>
+                          </article>
+                          <% }); %>
+                            <% } %>
+
+                              <% if (certifications && certifications.length> 0) { %>
+                                <% certifications.forEach(function(cert, index) { %>
+                                  <article class="project-card reveal portfolio-item" data-category="certificate"
+                                    style="animation-delay: <%= index * 70 %>ms; border-color: rgba(124, 58, 237, 0.2);">
+                                    <div class="project-cover"
+                                      style="<%= cert.mainImage ? 'background-image: url(' + getRawUrl(cert.mainImage) + '); background-size: cover; background-position: center;' : '' %>">
+                                      <div class="project-overlay"
+                                        style="background: linear-gradient(to top, var(--surface) 0%, transparent 100%);">
+                                      </div>
+                                      <div class="project-label" style="background: rgba(124, 58, 237, 0.9);">
+                                        Certificate</div>
+                                    </div>
+                                    <div class="project-body">
+                                      <h3 style="color: #a78bfa;">
+                                        <%= cert.courseName %>
+                                      </h3>
+                                      <p style="font-size: 0.85rem; color: #fff; margin-bottom: 0.5rem;">
+                                        <%= cert.institute %>
+                                      </p>
+                                      <p class="project-description-truncate">
+                                        <%= cert.description %>
+                                      </p>
+                                      <div class="project-tags">
+                                        <% cert.technologies.forEach(function(tag) { %>
+                                          <span
+                                            style="background: rgba(124, 58, 237, 0.1); border: 1px solid rgba(124, 58, 237, 0.2); color: #c4b5fd;">
+                                            <%= tag %>
+                                          </span>
+                                          <% }); %>
+                                      </div>
+                                      <div class="project-actions">
+                                        <a href="/MyPort/certificate/<%= cert._id %>" class="button button-small"
+                                          style="background: #7c3aed; color: #fff;">View Details</a>
+                                      </div>
+                                    </div>
+                                  </article>
+                                  <% }); %>
+                                    <% } %>
+
+                                      <% if ((!projects || projects.length===0) && (!certifications ||
+                                        certifications.length===0)) { %>
+                                        <div
+                                          style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
+                                          <p>No projects or certifications yet. <a href="/admin/login"
+                                              style="color: var(--accent); text-decoration: none;">Add from admin
+                                              panel</a></p>
+                                        </div>
+                                        <% } %>
+                    </div>
+                  </section>
+
+                  <section id="contact" class="section-padding">
+                    <div class="container section-header reveal">
+                      <p class="section-label">Contact</p>
+                      <h2>Let's build something amazing together.</h2>
+                    </div>
+                    <div class="container contact-grid">
+                      <div class="contact-info reveal">
+                        <h3>Get in touch</h3>
+                        <p>I'm available for freelance projects, collaborations, and full-time opportunities. Feel free
+                          to reach out to discuss your next web development project.</p>
+                        <div class="contact-panel">
+                          <div>
+                            <span>Email</span>
+                            <p>kishore21092003@gmail.com</p>
+                          </div>
+                          <div>
+                            <span>Phone</span>
+                            <p>+91 7065676082</p>
+                          </div>
+                        </div>
+                      </div>
+                      <form class="contact-form reveal" action="/contact" method="post">
+                        <label>
+                          <span>Name</span>
+                          <input type="text" name="name" placeholder="Your name" required />
+                        </label>
+                        <label>
+                          <span>Email</span>
+                          <input type="email" name="email" placeholder="you@example.com" required />
+                        </label>
+                        <label>
+                          <span>Phone Number (Optional)</span>
+                          <input type="tel" name="phone" placeholder="+91 ..." />
+                        </label>
+                        <label class="full-width">
+                          <span>Message</span>
+                          <textarea name="message" rows="6" placeholder="Tell me about your project"
+                            required></textarea>
+                        </label>
+                        <button class="button" type="submit">Send Message</button>
+                      </form>
+                    </div>
+                  </section>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
+
+    <script src="/js/main.js"></script>
+  </body>
+
+  </html>

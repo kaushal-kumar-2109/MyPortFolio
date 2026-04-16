@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Images | <%= project.title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --surface-alt: #111623;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #ff7a00;
+        --danger: #ff4c4c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .admin-header {
+        background: var(--surface);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .admin-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: transform 0.2s ease, background 0.25s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+
+      .btn-danger {
+        background: rgba(255, 76, 76, 0.15);
+        color: #ff9999;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 1rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        color: #fff;
+        font-family: inherit;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .image-card {
+        background: var(--surface-alt);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        position: relative;
+      }
+
+      .image-preview {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: #000;
+      }
+
+      .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .image-info {
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .image-caption {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+      }
+
+      .status-msg {
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .success {
+        background: rgba(76, 175, 80, 0.1);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        color: #81c784;
+      }
+
+      .error {
+        background: rgba(244, 67, 54, 0.1);
+        border: 1px solid rgba(244, 67, 54, 0.2);
+        color: #e57373;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1>Manage Images: <%= project.title %></h1>
+      <a href="/admin/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+      <% 
+        const success = typeof query !== 'undefined' ? query.success : null;
+        const error = typeof query !== 'undefined' ? query.error : null;
+      %>
+
+      <% if (success) { %>
+        <div class="status-msg success"><%= success %></div>
+      <% } %>
+      <% if (error) { %>
+        <div class="status-msg error"><%= error %></div>
+      <% } %>
+
+      <div class="card">
+        <h3>Add New Image</h3>
+        <form action="/admin/project/<%= project._id %>/images/add" method="POST">
+          <div class="form-group">
+            <label>Image URL or Base64 Data</label>
+            <input type="text" name="url" placeholder="https://example.com/image.jpg or data:image/..." required />
+          </div>
+          <div class="form-group">
+            <label>Caption (Optional)</label>
+            <input type="text" name="caption" placeholder="Enter image description" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Image</button>
+        </form>
+      </div>
+
+      <h2>Current Images (<%= images.length %>)</h2>
+      <% if (images.length > 0) { %>
+        <div class="image-grid">
+          <% images.forEach(image => { %>
+            <div class="image-card">
+              <div class="image-preview">
+                <img src="<%= image.url %>" alt="<%= image.caption %>" onerror="this.src='https://placehold.co/600x400?text=Invalid+URL'" />
+              </div>
+              <div class="image-info">
+                <div style="flex: 1; overflow: hidden;">
+                  <p class="image-caption" title="<%= image.caption %>"><%= image.caption || 'No caption' %></p>
+                  <p style="font-size: 0.65rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    URL: <a href="<%= image.url %>" target="_blank" style="color: var(--accent);"><%= image.url %></a>
+                  </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <% if (project.mainImage === image.url) { %>
+                    <span style="background: var(--accent); color: white; padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;">Main</span>
+                  <% } else { %>
+                    <form action="/admin/project/<%= project._id %>/images/set-main/<%= image._id %>" method="POST">
+                      <button type="submit" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.4rem 0.8rem;">Set Main</button>
+                    </form>
+                  <% } %>
+                  <form action="/admin/project/<%= project._id %>/images/delete/<%= image._id %>" method="POST" onsubmit="return confirm('Delete this image?');">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <p style="color: var(--text-muted); text-align: center; margin-top: 3rem;">No images uploaded for this project yet.</p>
+      <% } %>
+    </div>
+  </body>
+</html>

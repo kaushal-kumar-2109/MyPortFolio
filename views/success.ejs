@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortFolio</title>
+    <meta name="description" content="Personal portfolio website" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="error-page">
+    <div class="error-container success-card reveal">
+        <div class="success-icon">✓</div>
+        <h2 class="error-title">Message Sent!</h2>
+        <p class="error-message">Thank you for reaching out. I've received your message and will get back to you shortly.</p>
+        
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 2rem;">
+            Redirecting back to portfolio in <span id="timer">3</span>s...
+        </p>
+
+        <div class="error-actions" style="margin-top: 1.5rem;">
+            <a href="/MyPort/home" class="button">Return Now</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.error-container');
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(20px)';
+            container.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
+            
+            setTimeout(() => {
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Countdown and Redirect
+            let timeLeft = 3;
+            const timerEl = document.getElementById('timer');
+            
+            const interval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    window.location.href = '/MyPort/home';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

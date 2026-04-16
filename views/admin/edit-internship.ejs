@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Internship | Portfolio Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #10b981;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0; min-height: 100vh; background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; }
+      .admin-header { background: var(--surface); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem 2rem; }
+      .admin-header h1 { margin: 0; font-size: 1.5rem; }
+      .container { max-width: 600px; margin: 2rem auto; padding: 2rem; }
+      .form-card { border-radius: 1.5rem; background: var(--surface); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; }
+      .form-group { margin-bottom: 1.5rem; }
+      label { display: block; margin-bottom: 0.65rem; color: #fff; font-weight: 600; font-size: 0.9rem; }
+      input, textarea, select { width: 100%; padding: 1rem 1.2rem; border-radius: 1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: #fff; font-family: 'Poppins', sans-serif; font-size: 0.95rem; transition: border-color 0.25s ease; }
+      input:focus, textarea:focus, select:focus { outline: none; border-color: rgba(16, 185, 129, 0.5); }
+      .btn { flex: 1; padding: 1rem 1.5rem; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: transform 0.2s ease, background 0.25s ease; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { background: var(--accent); color: #fff; }
+      .btn-secondary { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1 style="color: #10b981;">Edit Internship</h1>
+    </div>
+
+    <div class="container">
+      <div class="form-card">
+        <form method="post">
+          <div class="form-group">
+            <label for="internshipName">Internship Title *</label>
+            <input type="text" id="internshipName" name="internshipName" value="<%= internship.internshipName %>" required />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company / Organization *</label>
+            <input type="text" id="company" name="company" value="<%= internship.company %>" required />
+          </div>
+
+          <div class="form-group">
+            <label for="role">Role *</label>
+            <input type="text" id="role" name="role" value="<%= internship.role %>" required />
+          </div>
+
+          <div class="form-group">
+            <label for="technologies">Technologies (Comma separated)</label>
+            <input type="text" id="technologies" name="technologies" value="<%= internship.technologies.join(', ') %>" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label for="start">Start Date *</label>
+              <input type="text" id="start" name="start" value="<%= internship.start %>" required />
+            </div>
+            <div class="form-group">
+              <label for="end">End Date</label>
+              <input type="text" id="end" name="end" value="<%= internship.end %>" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mode">Mode</label>
+            <select id="mode" name="mode">
+              <option value="Remote" <%= internship.mode === 'Remote' ? 'selected' : '' %>>Remote</option>
+              <option value="In-office" <%= internship.mode === 'In-office' ? 'selected' : '' %>>In-office</option>
+              <option value="Hybrid" <%= internship.mode === 'Hybrid' ? 'selected' : '' %>>Hybrid</option>
+              <option value="Freelance" <%= internship.mode === 'Freelance' ? 'selected' : '' %>>Freelance</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+            <button type="submit" class="btn btn-primary">Update Internship</button>
+            <a href="/admin/dashboard" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

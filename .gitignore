@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Environment Variables (NEVER commit these!)
+.env
+.env.keys
+.env.local
+.env.production
+.env.*
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build output
+dist/
+build/
+
+# dotenvx encrypted key file (keep this safe)
+# Uncomment if you want to exclude it:
+# .env.keys
+
+# Uploaded files (if any)
+public/uploads/
+
+# PM2
+.pm2/

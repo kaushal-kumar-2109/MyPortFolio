@@ -1,0 +1,27 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#home" class="brand">
+      <span class="brand-mark">K</span>
+      <p style="font-weight: bolder; font-size: larger;">KISHORE</p>
+    </a>
+    <nav class="nav-menu" id="mainNav">
+      <a href="/MyPort/home#home">Home</a>
+      <a href="/MyPort/home#about">About</a>
+      <a href="/MyPort/home#services">Services</a>
+      <a href="/MyPort/home#experience">Experience</a>
+      <a href="/MyPort/home#skills">SkillSet</a>
+      <a href="/MyPort/home#portfolio">Portfolio</a>
+      <a href="/MyPort/home#contact">Contact</a>
+      <% if (admin) { %>
+        <a href="/admin/dashboard" class="admin-link">Dashboard</a>
+        <a href="/admin/logout" class="admin-link logout">Logout</a>
+        <% } %>
+    </nav>
+    <a href="#contact" class="button button-alt">Hire Me</a>
+    <button class="mobile-toggle" type="button" aria-label="Toggle navigation" id="navToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>

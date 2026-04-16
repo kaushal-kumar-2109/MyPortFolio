@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortFolio</title>
+    <meta name="description" content="Personal portfolio website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #ff7a00;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .login-container {
+        width: min(420px, calc(100% - 2rem));
+        padding: 2rem;
+        border-radius: 2rem;
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 35px 95px rgba(0, 0, 0, 0.25);
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .login-header h1 {
+        margin: 0 0 0.5rem;
+        font-size: 1.8rem;
+      }
+
+      .login-header p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.65rem;
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.95rem;
+        transition: border-color 0.25s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: rgba(255, 122, 0, 0.5);
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .error-message {
+        padding: 1rem;
+        border-radius: 1rem;
+        background: rgba(255, 76, 76, 0.12);
+        border: 1px solid rgba(255, 76, 76, 0.25);
+        color: #ff9999;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background 0.25s ease, transform 0.2s ease;
+      }
+
+      .submit-btn:hover {
+        background: #ff8c1a;
+        transform: translateY(-2px);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Loader Styles */
+      .loader-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(7, 9, 15, 0.85);
+        backdrop-filter: blur(10px);
+        display: none;
+        place-items: center;
+        z-index: 9999;
+      }
+      .loader-overlay.active { display: grid; }
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(255, 122, 0, 0.2);
+        border-left-color: #ff7a00;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+  </head>
+  <body>
+    <div id="loginLoader" class="loader-overlay">
+      <div class="loader"></div>
+    </div>
+    <div class="login-container">
+      <div class="login-header">
+        <h1>Admin Login</h1>
+        <p>Manage your portfolio projects</p>
+      </div>
+
+      <% if (typeof error !== 'undefined') { %>
+        <div class="error-message"><%= error %></div>
+      <% } %>
+
+      <form method="post" id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required />
+        </div>
+
+        <button type="submit" class="submit-btn" id="loginBtn">Login</button>
+      </form>
+    </div>
+
+    <script>
+      document.getElementById('loginForm').addEventListener('submit', function() {
+        document.getElementById('loginLoader').classList.add('active');
+      });
+    </script>
+  </body>
+</html>

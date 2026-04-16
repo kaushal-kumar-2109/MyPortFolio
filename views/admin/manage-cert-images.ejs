@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Images | <%= cert.courseName %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --surface-alt: #111623;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #ff7a00;
+        --accent-cert: #7c3aed;
+        --danger: #ff4c4c;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .admin-header {
+        background: var(--surface);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .admin-header-left h1 {
+        margin: 0 0 0.2rem;
+        font-size: 1.4rem;
+      }
+
+      .admin-header-left p {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1.4rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.88rem;
+        font-family: 'Poppins', sans-serif;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: transform 0.2s ease, background 0.25s ease;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+
+      .btn-primary {
+        background: var(--accent-cert);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(124, 58, 237, 0.25);
+      }
+
+      .btn-primary:hover { background: #6d28d9; }
+
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+
+      .btn-secondary:hover { background: rgba(255, 255, 255, 0.05); }
+
+      .btn-danger {
+        background: rgba(255, 76, 76, 0.12);
+        color: #fca5a5;
+        font-size: 0.78rem;
+        padding: 0.45rem 0.9rem;
+      }
+
+      .btn-danger:hover { background: rgba(255, 76, 76, 0.22); }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .card h3 {
+        margin: 0 0 1.5rem;
+        font-size: 1rem;
+        color: #a78bfa;
+      }
+
+      .form-group { margin-bottom: 1.25rem; }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 0.8rem;
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.92rem;
+        transition: border-color 0.2s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--accent-cert);
+      }
+
+      input::placeholder { color: rgba(255,255,255,0.25); }
+
+      .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 1.25rem;
+      }
+
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .image-card {
+        background: var(--surface-alt);
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        position: relative;
+        transition: border-color 0.2s ease;
+      }
+
+      .image-card.is-main {
+        border-color: var(--accent-cert);
+        box-shadow: 0 0 0 1px var(--accent-cert);
+      }
+
+      .image-preview {
+        aspect-ratio: 16/9;
+        overflow: hidden;
+        background: #000;
+      }
+
+      .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .image-card:hover .image-preview img { transform: scale(1.04); }
+
+      .image-info {
+        padding: 0.9rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .image-caption {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 130px;
+      }
+
+      .main-badge {
+        background: var(--accent-cert);
+        color: white;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .btn-set-main {
+        background: rgba(124, 58, 237, 0.12);
+        color: #a78bfa;
+        border: 1px solid rgba(124, 58, 237, 0.25);
+        font-size: 0.72rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        transition: background 0.2s ease;
+        flex-shrink: 0;
+      }
+
+      .btn-set-main:hover { background: rgba(124, 58, 237, 0.22); }
+
+      .status-msg {
+        padding: 0.9rem 1.1rem;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .success {
+        background: rgba(76, 175, 80, 0.08);
+        border: 1px solid rgba(76, 175, 80, 0.2);
+        color: #86efac;
+      }
+
+      .error {
+        background: rgba(244, 67, 54, 0.08);
+        border: 1px solid rgba(244, 67, 54, 0.2);
+        color: #fca5a5;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: var(--text-muted);
+      }
+
+      .empty-state svg {
+        opacity: 0.25;
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <div class="admin-header-left">
+        <h1>📷 Manage Images</h1>
+        <p><%= cert.courseName %> &mdash; <%= cert.institute %></p>
+      </div>
+      <a href="/admin/dashboard" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+      <%
+        const success = typeof query !== 'undefined' ? query.success : null;
+        const err = typeof query !== 'undefined' ? query.error : null;
+      %>
+      <% if (success) { %>
+        <div class="status-msg success"><%= success %></div>
+      <% } %>
+      <% if (err) { %>
+        <div class="status-msg error"><%= err %></div>
+      <% } %>
+
+      <!-- Add Image Form -->
+      <div class="card">
+        <h3>➕ Add New Image</h3>
+        <form action="/admin/certificate/<%= cert._id %>/images/add" method="POST">
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="text" name="url" placeholder="https://example.com/cert.jpg  or  GitHub blob URL" required />
+          </div>
+          <div class="form-group">
+            <label>Caption (Optional)</label>
+            <input type="text" name="caption" placeholder="e.g. Certificate of Completion" />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Image</button>
+        </form>
+      </div>
+
+      <!-- Images Grid -->
+      <div class="section-title">Current Images (<%= images.length %>)</div>
+
+      <% if (images.length > 0) { %>
+        <div class="image-grid">
+          <% images.forEach(image => { %>
+            <div class="image-card <%= cert.mainImage === image.url ? 'is-main' : '' %>">
+              <div class="image-preview">
+                <img
+                  src="<%= image.url %>"
+                  alt="<%= image.caption %>"
+                  onerror="this.src='https://placehold.co/600x400/1d2435/a0a3b1?text=Invalid+URL'"
+                />
+              </div>
+              <div class="image-info">
+                <div style="flex: 1; min-width: 0;">
+                  <p class="image-caption" title="<%= image.caption %>">
+                    <%= image.caption || 'No caption' %>
+                  </p>
+                </div>
+                <div style="display: flex; gap: 0.4rem; align-items: center; flex-shrink: 0;">
+                  <% if (cert.mainImage === image.url) { %>
+                    <span class="main-badge">✓ Main</span>
+                  <% } else { %>
+                    <form action="/admin/certificate/<%= cert._id %>/images/set-main/<%= image._id %>" method="POST">
+                      <button type="submit" class="btn-set-main">Set Main</button>
+                    </form>
+                  <% } %>
+                  <form action="/admin/certificate/<%= cert._id %>/images/delete/<%= image._id %>" method="POST" onsubmit="return confirm('Delete this image?');">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <p>No images added yet for this certificate.</p>
+        </div>
+      <% } %>
+    </div>
+  </body>
+</html>

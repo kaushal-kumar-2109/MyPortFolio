@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07090f;
+      --surface: #0e121c;
+      --surface-alt: #111623;
+      --border: #1d2435;
+      --text-muted: #a0a3b1;
+      --accent: #ff7a00;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .admin-header {
+      background: var(--surface);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      transition: transform 0.2s ease, background 0.25s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #ff8c1a;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-danger {
+      background: rgba(255, 76, 76, 0.15);
+      color: #ff9999;
+    }
+
+    .btn-danger:hover {
+      background: rgba(255, 76, 76, 0.25);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .success-message {
+      padding: 1rem;
+      border-radius: 1rem;
+      background: rgba(76, 175, 80, 0.12);
+      border: 1px solid rgba(76, 175, 80, 0.25);
+      color: #81c784;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .dashboard-header h2 {
+      margin: 0;
+    }
+
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .projects-table th {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 1rem;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .projects-table td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .projects-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .project-title {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(255, 122, 0, 0.1);
+      color: #ff9e42;
+      font-size: 0.8rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-sm {
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state p {
+      margin: 0 0 1rem;
+    }
+
+    .accent-cert { color: #a78bfa; }
+
+    .cert-section { margin-top: 3rem; }
+
+    .tag-cert {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(124, 58, 237, 0.12);
+      color: #a78bfa;
+      font-size: 0.8rem;
+    }
+
+    .btn-cert {
+      background: #7c3aed;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.25);
+    }
+
+    .btn-cert:hover {
+      background: #6d28d9;
+    }
+
+    .btn-images-cert {
+      background: rgba(124, 58, 237, 0.15);
+      color: #a78bfa;
+    }
+
+    .btn-images-cert:hover {
+      background: rgba(124, 58, 237, 0.25);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="admin-header">
+    <h1>Admin Dashboard</h1>
+    <div class="admin-actions">
+      <a href="/admin/profile/basic" class="btn btn-secondary" style="background: rgba(255,122,0,0.1); color: var(--accent); border-color: var(--accent);">Basic Settings</a>
+      <a href="/admin/profile/main" class="btn btn-secondary" style="background: rgba(255,122,0,0.1); color: var(--accent); border-color: var(--accent);">Main Settings</a>
+      <a href="/admin/add-project" class="btn btn-primary">+ Add Project</a>
+      <a href="/admin/add-certificate" class="btn btn-cert">+ Add Certificate</a>
+      <a href="/admin/internship/add" class="btn btn-primary" style="background: #10b981;">+ Add Internship</a>
+      <a href="/admin/logout" class="btn btn-secondary">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <% if (typeof query !=='undefined' && query.success) { %>
+      <div class="success-message">
+        <%= query.success %>
+      </div>
+      <% } %>
+
+        <div class="dashboard-header">
+          <h2>Projects</h2>
+          <span style="color: var(--text-muted); font-size: 0.9rem;">
+            <%= projects.length %> projects
+          </span>
+        </div>
+
+        <% if (projects.length> 0) { %>
+          <table class="projects-table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% projects.forEach(function(project) { %>
+                <tr>
+                  <td class="project-title">
+                    <%= project.title %>
+                  </td>
+                  <td>
+                    <div class="project-tags">
+                      <% project.tags.forEach(function(tag) { %>
+                        <span class="tag">
+                          <%= tag %>
+                        </span>
+                        <% }); %>
+                    </div>
+                  </td>
+                  <td style="color: var(--text-muted); font-size: 0.9rem;">
+                    <%= new Date(project.createdAt).toLocaleDateString() %>
+                  </td>
+                  <td>
+                    <div class="action-buttons">
+                      <a href="/admin/project/<%= project._id %>/images" class="btn btn-primary btn-sm"
+                        style="background: #3498db;">
+                        Images <span
+                          style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-left: 4px;">
+                          <%= project.imageCount || 0 %>
+                        </span>
+                      </a>
+                      <a href="/admin/edit-project/<%= project._id %>" class="btn btn-secondary btn-sm">Edit</a>
+                      <form action="/admin/delete-project/<%= project._id %>" method="post" style="display: inline;"
+                        onsubmit="return confirm('Are you sure?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+          <% } else { %>
+            <div class="empty-state">
+              <p>No projects yet. <a href="/admin/add-project" style="color: var(--accent); text-decoration: none;">Create one</a></p>
+            </div>
+          <% } %>
+
+          <!-- ─── CERTIFICATES SECTION ─── -->
+          <div class="cert-section">
+            <div class="dashboard-header">
+              <h2 class="accent-cert">🎓 Certificates</h2>
+              <span style="color: var(--text-muted); font-size: 0.9rem;">
+                <%= certifications.length %> certificate<%= certifications.length === 1 ? '' : 's' %>
+              </span>
+            </div>
+
+            <% if (certifications.length > 0) { %>
+              <table class="projects-table">
+                <thead>
+                  <tr>
+                    <th>Course</th>
+                    <th>Institute</th>
+                    <th>Technologies</th>
+                    <th>Added</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% certifications.forEach(function(cert) { %>
+                    <tr>
+                      <td class="project-title" style="color: #a78bfa;"><%= cert.courseName %></td>
+                      <td style="color: var(--text-muted); font-size: 0.9rem;"><%= cert.institute %></td>
+                      <td>
+                        <div class="project-tags">
+                          <% cert.technologies.slice(0, 4).forEach(function(tech) { %>
+                            <span class="tag tag-cert"><%= tech %></span>
+                          <% }); %>
+                          <% if (cert.technologies.length > 4) { %>
+                            <span class="tag-cert" style="padding: 0.35rem 0.6rem; border-radius: 999px; font-size: 0.75rem;">+<%= cert.technologies.length - 4 %> more</span>
+                          <% } %>
+                        </div>
+                      </td>
+                      <td style="color: var(--text-muted); font-size: 0.9rem;">
+                        <%= new Date(cert.createdAt).toLocaleDateString() %>
+                      </td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="/admin/certificate/<%= cert._id %>/images" class="btn btn-primary btn-sm btn-images-cert">
+                            Images
+                            <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; margin-left: 4px;">
+                              <%= cert.imageCount || 0 %>
+                            </span>
+                          </a>
+                          <a href="/admin/edit-certificate/<%= cert._id %>" class="btn btn-secondary btn-sm">Edit</a>
+                          <form action="/admin/delete-certificate/<%= cert._id %>" method="post" style="display: inline;"
+                            onsubmit="return confirm('Delete this certificate and all its images?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            <% } else { %>
+              <div class="empty-state">
+                <p>No certificates yet. <a href="/admin/add-certificate" style="color: #a78bfa; text-decoration: none;">Add one</a></p>
+              </div>
+            <% } %>
+          </div>
+          <!-- ─── END CERTIFICATES ─── -->
+
+          <!-- ─── INTERNSHIPS SECTION ─── -->
+          <div class="cert-section" style="margin-top: 4rem;">
+            <div class="dashboard-header">
+              <h2 style="color: #10b981;">💼 Internships</h2>
+              <span style="color: var(--text-muted); font-size: 0.9rem;">
+                <%= internships.length %> internship<%= internships.length === 1 ? '' : 's' %>
+              </span>
+            </div>
+
+            <% if (internships.length > 0) { %>
+              <table class="projects-table">
+                <thead>
+                  <tr>
+                    <th>Position / Role</th>
+                    <th>Company</th>
+                    <th>Tech</th>
+                    <th>Duration</th>
+                    <th>Mode</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% internships.forEach(function(intern) { %>
+                    <tr>
+                      <td class="project-title" style="color: #10b981;"><%= intern.internshipName %> / <%= intern.role %></td>
+                      <td style="color: #fff;"><%= intern.company %></td>
+                      <td>
+                        <div class="project-tags">
+                          <% intern.technologies.forEach(function(tech) { %>
+                            <span class="tag" style="background: rgba(16, 185, 129, 0.1); color: #34d399;"><%= tech %></span>
+                          <% }); %>
+                        </div>
+                      </td>
+                      <td style="color: var(--text-muted); font-size: 0.9rem;">
+                        <%= intern.start %> - <%= intern.end %>
+                      </td>
+                      <td>
+                        <span class="tag" style="background: rgba(255,255,255,0.05); color: #fff;"><%= intern.mode %></span>
+                      </td>
+                      <td>
+                        <div class="action-buttons">
+                          <a href="/admin/internship/edit/<%= intern._id %>" class="btn btn-secondary btn-sm">Edit</a>
+                          <form action="/admin/internship/delete/<%= intern._id %>" method="post" style="display: inline;"
+                            onsubmit="return confirm('Delete this internship?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                        </div>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+            <% } else { %>
+              <div class="empty-state">
+                <p>No internships added. <a href="/admin/internship/add" style="color: #10b981; text-decoration: none;">Add one</a></p>
+              </div>
+            <% } %>
+          </div>
+          <!-- ─── END INTERNSHIPS ─── -->
+
+  </div>
+</body>
+
+</html>

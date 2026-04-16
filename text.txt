@@ -1,0 +1,28 @@
+PORT=3000
+
+SESSION_SECRET=portfolio-admin-secret-key-2026
+NODE_ENV=development
+
+MONGO_USER_NAME="kaushal21092003kumar_db_user"
+MONGO_USER_PASSWORD="9Kjd7KaaiTcX4ouQ"
+MONGO_CLUSTER_SRV_URL="mongodb+srv://kaushal21092003kumar_db_user:9Kjd7KaaiTcX4ouQ@portfolio.czk3fdp.mongodb.net/?appName=portFolio"
+MONGO_CLUSTER_URL="mongodb://kaushal21092003kumar_db_user:9Kjd7KaaiTcX4ouQ@ac-qlv3spw-shard-00-00.czk3fdp.mongodb.net:27017,ac-qlv3spw-shard-00-01.czk3fdp.mongodb.net:27017,ac-qlv3spw-shard-00-02.czk3fdp.mongodb.net:27017/?ssl=true&replicaSet=atlas-tfdia1-shard-0&authSource=admin&appName=portFolio"
+
+ADMIN_USER_PASS="NothingToSay..IsThePassword.."
+ADMIN_USER="NothingToSay.."
+
+
+EMAIL_USER="kaushal21092003kumar@gmail.com"
+EMAIL_PASS="dusd rpma mxfm itde"
+
+# echo "# AllProjectImage" >> README.md
+# git init
+# git add README.md
+# git commit -m "first commit"
+# git branch -M main
+# git remote add origin https://github.com/kaushal-kumar-2109/AllProjectImage.git
+# git push -u origin main
+
+# git remote add origin https://github.com/kaushal-kumar-2109/AllProjectImage.git
+# git branch -M main
+# git push -u origin main

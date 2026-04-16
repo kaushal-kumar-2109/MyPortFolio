@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic Info | Portfolio Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #07090f;
+        --surface: #0e121c;
+        --border: #1d2435;
+        --text-muted: #a0a3b1;
+        --accent: #ff7a00;
+      }
+
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0; min-height: 100vh; background: var(--bg); color: #fff; font-family: 'Poppins', sans-serif; }
+      .admin-header { background: var(--surface); border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem 2rem; }
+      .admin-header h1 { margin: 0; font-size: 1.5rem; }
+      .container { max-width: 800px; margin: 2rem auto; padding: 2rem; }
+      .form-card { border-radius: 1.5rem; background: var(--surface); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; }
+      .form-group { margin-bottom: 1.5rem; }
+      label { display: block; margin-bottom: 0.65rem; color: #fff; font-weight: 600; font-size: 0.9rem; }
+      input, textarea { width: 100%; padding: 1rem 1.2rem; border-radius: 1rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: #fff; font-family: 'Poppins', sans-serif; font-size: 0.95rem; transition: border-color 0.25s ease; resize: vertical; }
+      input:focus, textarea:focus { outline: none; border-color: rgba(255, 122, 0, 0.5); }
+      .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
+      .btn { flex: 1; padding: 1rem 1.5rem; border-radius: 999px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: transform 0.2s ease, background 0.25s ease; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { background: var(--accent); color: #fff; }
+      .btn-secondary { background: transparent; border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; }
+      .preview-box { background: rgba(255,255,255,0.02); border-radius: 1rem; padding: 1rem; margin-bottom: 2rem; border: 1px dashed rgba(255,255,255,0.1); }
+      .preview-box h3 { margin: 0 0 0.5rem; font-size: 0.9rem; color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <div class="admin-header">
+      <h1>Manage Basic Information</h1>
+    </div>
+
+    <div class="container">
+      <div class="form-card">
+        <form method="post">
+          <div class="form-group">
+            <label for="mainTitle">Main Title (Hero Title) *</label>
+            <input type="text" id="mainTitle" name="mainTitle" value="<%= info ? info.mainTitle : '' %>" placeholder="e.g. Building scalable web applications..." required />
+          </div>
+
+          <div class="form-group">
+            <label for="subtitle">Subtitle / Role</label>
+            <input type="text" id="subtitle" name="subtitle" value="<%= info ? info.subtitle : '' %>" placeholder="e.g. Full Stack Developer" />
+          </div>
+
+          <div class="form-group">
+            <label for="shortBio">Short Bio (Hero Description)</label>
+            <textarea id="shortBio" name="shortBio" rows="3" placeholder="A brief catchphrase for your hero section"><%= info ? info.shortBio : '' %></textarea>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+              <label for="totalProject">Total Projects Count</label>
+              <input type="text" id="totalProject" name="totalProject" value="<%= info ? info.totalProject : '' %>" placeholder="e.g. 5+" />
+            </div>
+            <div class="form-group">
+              <label for="yearOfExperience">Years of Experience</label>
+              <input type="text" id="yearOfExperience" name="yearOfExperience" value="<%= info ? info.yearOfExperience : '' %>" placeholder="e.g. 2" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mainImage">Main Image URL (Hero Visual)</label>
+            <input type="url" id="mainImage" name="mainImage" value="<%= info ? info.mainImage : '' %>" placeholder="https://example.com/image.jpg" />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="/admin/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
-const MongoStore = require('connect-mongo');
+const { MongoStore } = require('connect-mongo');
 // require('dotenv').config();
 require('@dotenvx/dotenvx').config()
 
@@ -32,12 +32,12 @@ async function startServer() {
         store: MongoStore.create({
           mongoUrl: process.env.MONGO_CLUSTER_URL || process.env.MONGO_CLUSTER_SRV_URL,
           collectionName: 'sessions',
-          ttl: 30 * 60 // 30 minutes in seconds
+          ttl: 30 * 60,
         }),
         cookie: {
           secure: process.env.NODE_ENV === 'production',
           httpOnly: true,
-          maxAge: 1000 * 60 * 30, // 30 minutes in milliseconds
+          maxAge: 1000 * 60 * 30,
         },
       })
     );
@@ -91,10 +91,10 @@ async function startServer() {
     // Global Error Handler to prevent crashes
     app.use((err, req, res, next) => {
       console.error('⚠️ Server Error:', err.message);
-      
+
       // Pass the error message to the view
-      const errorMessage = (err.name === 'SyntaxError' && err.message.includes('ejs')) 
-        ? `Template Error: ${err.message}` 
+      const errorMessage = (err.name === 'SyntaxError' && err.message.includes('ejs'))
+        ? `Template Error: ${err.message}`
         : err.message || 'Internal Server Error';
 
       res.status(500).render('error', { message: errorMessage });

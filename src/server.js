@@ -24,6 +24,10 @@ async function startServer() {
     app.use(express.urlencoded({ extended: true, limit: '10mb' }));
     app.use(express.static(path.join(__dirname, '../public')));
 
+    // Trust proxy is required if you are behind a reverse proxy (Heroku, Render, Railway, etc.)
+    // It allows secure cookies to be sent over HTTPS by the proxy.
+    app.set('trust proxy', 1);
+
     app.use(
       session({
         secret: process.env.SESSION_SECRET || 'your-secret-key',

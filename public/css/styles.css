@@ -891,9 +891,10 @@ h1 {
 
 /* Experience Section */
 .experience-grid {
-  display: grid;
+  display: flex;
+  flez-wrap: wrap;
   gap: 1.5rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /*grid-template-columns: repeat(3, minmax(0, 1fr));*/
 }
 
 .experience-card {
@@ -1149,4 +1150,4 @@ h1 {
 }
 
 
-
+

@@ -66,7 +66,7 @@ async function startServer() {
     });
 
     app.get("/help",async(req,res)=>{
-      res.json({message:"The update show fine "});
+      res.json({message:"The update show fine ",update:"check for the updated one "});
     });
 
     app.post('/contact', async (req, res) => {

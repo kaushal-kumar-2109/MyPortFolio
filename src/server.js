@@ -65,6 +65,10 @@ async function startServer() {
       res.redirect('/MyPort/home');
     });
 
+    app.get("/help",async(req,res)=>{
+      res.json({message:"The update show fine "});
+    });
+
     app.post('/contact', async (req, res) => {
       try {
         const { name, email, phone, message } = req.body;

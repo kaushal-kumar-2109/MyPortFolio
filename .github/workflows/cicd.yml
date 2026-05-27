@@ -21,10 +21,12 @@ jobs:
     - name: backup .env
       run: |
         if [ -f .env ]; then mv .env /tmp/env_backup; fi
+        if [ -f .env.keys ]; then mv .env.keys /tmp/env_keys_backup; fi
     - uses: actions/checkout@v4
     - name: restore .env
       run: |
         if [ -f /tmp/env_backup ]; then mv /tmp/env_backup .env; fi
+        if [ -f /tmp/env_keys_backup ]; then mv /tmp/env_keys_backup .env.keys; fi
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
